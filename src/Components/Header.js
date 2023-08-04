@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useEffect, useRef } from "react";
+import axios from "axios";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import logo from "../assets/matardana logo.png";
+// import logo from "../assets/matardana logo.png";
 import SearchIcon from "@mui/icons-material/Search";
 import "./Header.css";
 import { useState } from "react";
@@ -31,15 +32,32 @@ import { connect } from "react-redux";
 import { logout } from "../redux/action";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { listItemIconClasses } from "@mui/material";
+import { LogoDevOutlined } from "@mui/icons-material";
 
 function Header(props) {
   const [flag, setFlag] = useState(true);
   const [subItem, setSub] = useState(false);
   const [myCart, setcart] = useState([]);
   const [username, setName] = useState("");
-  const [active,setActive]=useState(false)
+  const [active,setActive]=useState(false);
+  const [logo,setLogo]=useState([])
 
   const [open, setOpen] = useState(false);
+
+
+  const loadLogo=async()=>{
+    const res=await axios.get("https://matardana-api-xrjf.vercel.app/")
+    const data=res.data
+    // console.log(data)
+    setLogo(data)
+
+  }
+
+
+  useEffect(()=>{
+    loadLogo()
+
+  },[])
 
   const firestore = getFirestore();
 
@@ -171,10 +189,12 @@ function Header(props) {
 
   return (
     <>
-      <div class="header">
-        <Box sx={{ flexGrow: 1 }}>
+    
+    
+      <div class="header" sx={{position:"fixed"}}>
+        <Box sx={{ flexGrow: 1}}>
           <AppBar position="static" sx={{ background: "#ffffff" }}>
-            <Toolbar>
+            <Toolbar >
               <IconButton
                 size="large"
                 edge="start"
@@ -191,19 +211,43 @@ function Header(props) {
               >
                 <MenuIcon sx={{ fontSize: { md: "3rem", xs: "1.5rem" } }} />
               </IconButton>
+
               <Typography
                 variant="h6"
                 component="div"
-                sx={{ flexGrow: 1, paddingTop: "1rem" }}
+                sx={{ flexGrow: 1, paddingTop: "1rem",display:"flex",justifyContent:"center"}}
               >
-                <Link to="/">
-                  <img
-                    src={logo}
-                    alt="companyLogo"
-                    classname="company-logo"
-                    style={{ height: "3.5rem", cursor: "pointer" }}
-                  ></img>
-                </Link>
+              
+                
+               {logo.length!=0?<>
+                {
+                  logo.map((item)=>(
+
+                    <Link to="/">
+                 
+                    <img
+                      src={item.img}
+                      alt={item.id}
+                      classname="company-logo"
+                      style={{ height: "4.5rem", cursor: "pointer"}}
+                    ></img>
+                  </Link>
+
+                  ))
+                }
+
+              
+                
+                </>:<></>}
+                       
+                      
+                      
+
+                  
+                  
+                 
+                
+              
               </Typography>
               <Button
                 color="inherit"

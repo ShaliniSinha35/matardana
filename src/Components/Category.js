@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./Category.css";
 import img1 from "../assets/MATAR.gif";
 import img2 from "../assets/vegetable.png";
@@ -21,6 +21,7 @@ import img17 from "../assets/frozen.png";
 import img18 from "../assets/essential.png";
 import img19 from "../assets/rice.png";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const products=[
   {
@@ -144,8 +145,24 @@ const products=[
 
 
 
+
+
 function Category() {
   const navigate=useNavigate()
+  const [category,setCategory]=useState([])
+
+const loadCategory=async()=>{
+  const res=await axios.get("https://matardana-api-xrjf.vercel.app/category");
+  const data=res.data;
+  console.log(data);
+
+  setCategory(data)
+
+}
+
+useEffect(()=>{
+  loadCategory()
+},[])
 const handleClick=(name)=>{
   navigate(`/shop/${name}`)
 }
@@ -158,9 +175,9 @@ const handleClick=(name)=>{
       </div>
          
          <div className="category-lists" >
-          {products.map((item)=>(
+          {category.map((item)=>(
                  <div key={item.id} onClick={()=>handleClick(item.name)} className='category'>
-                 <img src={item.img}alt=""></img>
+                 <img src={item.img} alt={item.name}></img>
                  <p style={{marginTop:"0.2rem"}}>{item.name}</p>
                  </div>
           ))}

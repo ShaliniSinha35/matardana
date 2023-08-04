@@ -6,6 +6,9 @@
   
 
 }
+/* .containers{
+    margin-top: 6rem;
+} */
 .itemQuantity{
    /* background-color: aqua !important; */
    position:absolute;
@@ -15,6 +18,6 @@
     .itemQuantity{
         position:absolute;
         right:1rem;
-
     } 
+   
 }

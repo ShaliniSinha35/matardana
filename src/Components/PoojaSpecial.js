@@ -112,9 +112,9 @@ function PoojaSpecial(props) {
   };
 
 
-
   const myfirestore = getFirestore();
   const getCartItem = () => {
+
     const unsub = myfirestore
       .collection("users")
       .doc(props.auth.uid)
@@ -128,6 +128,7 @@ function PoojaSpecial(props) {
 
   useEffect(() => {
     if (props.auth.uid) {
+
       getCartItem();
     }
     else{
@@ -152,16 +153,7 @@ function PoojaSpecial(props) {
     return myCart.some((product) => product.name == item.name);
   };
 
-  // const goToCart = () => {
-  //   navigate("/cart");
-  // };
-
-  // const updateQty=(item)=>{
-  //   let updatedProduct=myCart.find((product)=>product.name==item.name);
-  //   let newArr= product.map((product)=>product.name==item.name?updatedProduct:product)
-  //   console.log(newArr)
-  //   setProduct(newArr)
-  // }
+  
 
   return (
     <div className="pSpecial-container">
@@ -188,7 +180,7 @@ function PoojaSpecial(props) {
 
               <CardMedia
                 component="img"
-                alt=""
+                alt={item.name}
                 height="100%"
                 onClick={() => handleViewItem(item)}
                 image={item.img[0]}
@@ -285,7 +277,7 @@ function PoojaSpecial(props) {
                         alignItems: "center",
                         justifyContent: "center",
                       }}
-                      // onClick={()=>handleDecrement(item)}
+                   
                     >
                       -
                     </button>
@@ -303,7 +295,7 @@ function PoojaSpecial(props) {
                         alignItems: "center",
                         justifyContent: "center",
                       }}
-                      // onClick={()=>handleIncrement(item)}
+                      // onClick={()=>setCount(count + 1)}
                     >
                       +
                     </button>

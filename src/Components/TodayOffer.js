@@ -286,7 +286,7 @@ function TodayOffer(props) {
 
               <CardMedia
                 component="img"
-                alt=""
+                alt={item.name}
                 height="100%"
                 image={item.img[0]}
                 onClick={() => handleViewItem(item)}

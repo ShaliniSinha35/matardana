@@ -19,7 +19,7 @@ function Navbar(props) {
   const navigate = useNavigate();
   const [myCart, setcart] = useState([]);
 
-  const[active,setActive]=useState("")
+  const[active,setActive]=useState("home")
 
   const firestore = getFirestore();
 

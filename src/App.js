@@ -32,6 +32,7 @@ import FAQ from "./Components/FAQ";
 import OrderHistory from "./Components/OrderHistory";
 import Contact from "./Components/Contact";
 import Feedback from "./Components/Feedback";
+import Order from "./Components/Order";
 function App() {
   return (
     <div className="App">
@@ -46,8 +47,8 @@ function App() {
                 <Navbar></Navbar>
                 <Banner /> <Category></Category>
                 <PoojaSpecial></PoojaSpecial>
-                <SecondBanner></SecondBanner>
                 <TodayOffer></TodayOffer>
+                <SecondBanner></SecondBanner>
                 <MostSelling></MostSelling>
                 <Brands></Brands>
                 <Call></Call>
@@ -229,11 +230,11 @@ function App() {
             exact
             path="/orderHistory"
             element={
-              <>
+              <PrivateRoute>
                 <Header></Header>
                 <Navbar></Navbar>
                 <OrderHistory></OrderHistory>
-              </>
+              </PrivateRoute>
             }
           ></Route>
           <Route
@@ -256,6 +257,18 @@ function App() {
                 <Navbar></Navbar>
                 <Feedback></Feedback>
               </>
+            }
+          ></Route>
+
+       <Route
+            exact
+            path="/orderPage"
+            element={
+              <PrivateRoute>
+                <Header></Header>
+                {/* <Navbar></Navbar> */}
+                <Order></Order>
+              </PrivateRoute>
             }
           ></Route>
         </Routes>

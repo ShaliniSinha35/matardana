@@ -61,7 +61,7 @@ function Shop(props) {
     shopType.Personal.forEach((item) => newarr.push(item));
   } else if (id === "Pooja Samagri") {
     shopType.Pooja.forEach((item) => newarr.push(item));
-  } else if (id === "Medical Care") {
+  } else if (id === "Medical care") {
     shopType.Medical.forEach((item) => newarr.push(item));
   } else if (id === "Frozen Products") {
     shopType.Frozen.forEach((item) => newarr.push(item));

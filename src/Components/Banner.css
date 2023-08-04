@@ -1,10 +1,7 @@
 .banner-cont {
   height: auto;
    position: relative; 
-
- 
-
-
+   /* top:2rem */
 }
 
 .slider-text {
@@ -14,15 +11,13 @@
   height: 2.4rem;
   position: absolute;
   bottom:-1.5rem;
- 
-
-
 }
 
 .slider-text h4 {
   margin-top: 0;
 
 }
+
 @media only screen and (max-width:330px){
  .slider-text{
   height:2rem;

@@ -186,7 +186,7 @@ function Login(props) {
               <img
                 onClick={handleClick}
                 src={registerImg}
-                alt=""
+                alt="register"
                 style={{ width: "10rem", cursor: "pointer" }}
               ></img>
             </CardActions>

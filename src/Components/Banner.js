@@ -1,75 +1,87 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import { useEffect, useState } from "react";
+import { styled } from "@mui/material/styles";
 import banner from "../assets/bannerImage.jpeg";
-import { createTheme } from '@mui/material/styles';
-import { ThemeProvider } from '@emotion/react';
+import { createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@emotion/react";
 import "./Banner.css";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
+import AliceCarousel from "react-alice-carousel";
+import "react-alice-carousel/lib/alice-carousel.css";
+import { Carousel } from "react-responsive-carousel";
+
+import axios from "axios";
+
 export default function Banner() {
+  const theme = createTheme();
 
-    const theme = createTheme();
+  theme.typography.h3 = {
+    fontSize: "1.2rem",
+    "@media (min-width:600px)": {
+      fontSize: "1.5rem",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "2.4rem",
+    },
+  };
 
-    theme.typography.h3 = {
-        fontSize: '1.2rem',
-        '@media (min-width:600px)': {
-            fontSize: '1.5rem',
-        },
-        [theme.breakpoints.up('md')]: {
-            fontSize: '2.4rem',
-        },
-    };
+  const [banner, setBanner] = useState([]);
 
+  const loadBanner = async () => {
+    const res = await axios.get("https://matardana-api-xrjf.vercel.app/banner");
+    const data = res.data;
+    // console.log(data)
+    setBanner(data);
+  };
 
+  useEffect(() => {
+    loadBanner();
+  });
+  const responsive = {
+    0: { items: 1 },
+    568: { items: 1 },
+    1024: { items: 1 },
+  };
 
-    return (
-        <>
-            <div className='banner-cont' >
-                <img src={banner} style={{width:"100%",height:"55%"}}  alt=""></img>
+  return (
+    <>
+      <div class="banner-cont">
+        {banner.length != 0 ? (
+          <>
+            <AliceCarousel
+              autoPlay
+              autoPlayInterval="500"
+              // infinite
+              disableButtonsControls
+              disableDotsControls
+              responsive={responsive}
+            >
+              {banner.map((item) => (
+                <img
+                  key={item.id}
+                  src={item.img}
+                  style={{ width: "100%", height: "45%" }}
+                  alt="Banner-Image"
+                ></img>
+              ))}
+            </AliceCarousel>
+          </>
+        ) : (
+          <></>
+        )}
 
-               {/* <Card variant="none" sx={{ position: "relative", background: "", height: "80vh",height:{sm:"60vh",md:"80vh",xs:"34vh"} }} >
-
-                    <CardMedia
-                        component="img"
-                         sx={{opacity:"0.878"}}
-                        image={banner}
-                        alt="Banner"
-                        
-
-                    /> */}
-{/* 
-                    <CardContent>
-                        <ThemeProvider theme={theme}>
-                            <Typography classname="banner-text" sx={{ position: "absolute", top: "10%", width: "100%" ,  fontFamily:" Stencil Std, fantasy" }} variant="h3" component="div" color="gray">
-                                Buy All Season Fresh Fruits and Vegetables
-                            </Typography>
-                        </ThemeProvider>
-                        <CardActions sx={{ width: "100%", background: "", display: "flex", justifyContent: "center", position: "absolute",top:{sm:"9.5rem",md:"12rem",xs:"5rem"} }}>
-                            <Button sx={{ borderRadius: "2rem", width: { md: "12rem", sm: "9rem" }, height:{md:"3rem",xs:"2rem"} , background: "#ffdd59", color: "Black", fontFamily: "Courier, monospace" }} variant="contained" classname="order-btn"><h3>Order Now</h3></Button>
-                        </CardActions>
-                    </CardContent> */}
-
-                {/* </Card>  */}
-
-
-                <div className='slider-text'>
-                <marquee width="60%" direction="left">
-                    <h4>
-                        What Would You Want To Get.....&nbsp; For any enquiry&nbsp;Please Contact&nbsp;
-                        <a href="tel:9155492401" style={{ textDecoration: "none" }}>
-                            <span style={{ color: "#efff00" }}> &nbsp;9155492401</span>
-                        </a>
-                    </h4>
-                </marquee>
-            </div>
-
-            </div>
-           
-        </>
-
-    );
+        <div className="slider-text">
+          <marquee width="60%" direction="left">
+            <h4>
+              What Would You Want To Get.....&nbsp; For any enquiry&nbsp;Please
+              Contact&nbsp;
+              <a href="tel:9155492401" style={{ textDecoration: "none" }}>
+                <span style={{ color: "#efff00" }}> &nbsp;9155492401</span>
+              </a>
+            </h4>
+          </marquee>
+        </div>
+      </div>
+    </>
+  );
 }

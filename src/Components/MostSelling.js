@@ -179,7 +179,7 @@ function MostSelling(props) {
   
   const myfirestore = getFirestore();
   const getCartItem = () => {
-    const unsub = myfirestore
+     const unsub = myfirestore
       .collection("users")
       .doc(props.auth.uid)
       .onSnapshot((snapshot) => {
@@ -191,7 +191,7 @@ function MostSelling(props) {
   };
 
   useEffect(() => {
-    if (props.auth.uid) {
+    if (props.auth.uid) { 
       getCartItem();
     }
     else{
@@ -252,7 +252,7 @@ function MostSelling(props) {
 
               <CardMedia
                 component="img"
-                alt=""
+                alt={item.name}
                 height="100%"
                 image={item.img[0]}
                 onClick={() => handleViewItem(item)}
@@ -272,7 +272,7 @@ function MostSelling(props) {
                     }}
                     onClick={() => handleBrand(item.brand)}
                   >
-                    {" "}
+            
                     {item.brand}
                   </span>
                 </Typography>

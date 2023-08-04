@@ -161,19 +161,30 @@ function Cart({ auth, removeItem, viewItem }) {
     let price = 0;
 
     myCart.map((item) => {
-      // let oldQty = Number(item.qty.split(" ")[0])
-      // let newQty= Number(item.qtyy.split(" ")[0])
-      // console.log(oldQty)
-      // console.log(newQty)
-
       let itemPrice = item.itemPrice ? item.itemPrice : item.newprice;
-
       price = Number(itemPrice) + price;
       console.log(price);
     });
     setPrice(price);
     setItem(myCart.length);
   }, [myCart, totalPrice]);
+
+
+
+  const handleOrder=async(amt)=>{
+  
+      let user = await firestore.collection("users").doc(auth.uid).get();
+      user = user.data();
+      let obj=[]
+       obj=[...user.cart]
+       await firestore.collection("users").doc(auth.uid).update({
+        order: obj,
+        totalAmt:amt,
+        cart:[]
+      });
+    
+      navigate("/orderPage")
+  }
 
   return (
     <>
@@ -342,6 +353,7 @@ function Cart({ auth, removeItem, viewItem }) {
             size="large"
             sx={{ borderRadius: "2rem", width: "40%" }}
             color="success"
+            onClick={()=>handleOrder(totalPrice)}
           >
             {" "}
             Pay <CurrencyRupeeIcon></CurrencyRupeeIcon>
@@ -360,7 +372,7 @@ const mapStateToProps = (state) => {
     auth: state.firebase.auth,
   };
 };
-export const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     removeItem: (name) => dispatch(removeFromCart(name)),
     viewItem: (item) => dispatch(viewItem(item)),
